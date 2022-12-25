@@ -1,0 +1,19 @@
+import typing as t
+
+__all__ = ['DocumentParser']
+
+class _SupportsStr(t.Protocol):
+    def __str__(self) -> str: ...
+
+class _WordSentenceTokenizer(t.Protocol):
+    def to_sentences(self, paragraph: _SupportsStr) -> t.Sequence[str]: ...
+    def to_words(self, sentence: _SupportsStr) -> t.Sequence[str]: ...
+
+class DocumentParser(object):
+    SIGNIFICANT_WORDS: tuple[str, ...]
+    STIGMA_WORDS: tuple[str, ...]
+    def __init__(self, tokenizer: _WordSentenceTokenizer) -> None: ...
+    def tokenize_sentences(self, paragraph: _SupportsStr) -> list[str]: ...
+    def tokenize_words(self, paragraph: _SupportsStr) -> t.Sequence[str]: ...
+
+del t
